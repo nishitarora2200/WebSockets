@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <ul class="list-group" id="eventlist">
+        
+        
+      </ul>
+    <form id="eventform">
+        <textarea name="event" class="form-control" placeholder="enter event details" id="chat"></textarea>
+            <a class="btn btn-success" value="submit" href="#">Send</a>
+    </form>
+    <script>
+    var socket = io();
+    
+    document.querySelector('.btn').addEventListener('click',()=>{
+        
+        var message = document.getElementById('chat').value;
+        console.log(message);
+        socket.emit('message',message);
+    })
+    socket.on('user',data=>{
+        var element = document.createElement("li");
+        var textNode = document.createTextNode(data);
+        element.appendChild(textNode);
+        var parent = document.getElementById("eventlist");
+        element.classList.add('list-group-item');
+        parent.appendChild(element);
+        
+    })
+   
+    </script>
+</body>
+</html>
